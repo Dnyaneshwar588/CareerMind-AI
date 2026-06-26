@@ -1,0 +1,41 @@
+# Gitignore for AI Campus Placement Strategist
+
+# Environment variables (sensitive API keys)
+.env
+backend/.env
+
+# Python virtual environment and cache
+.venv/
+__pycache__/
+*.pyc
+
+# Node dependencies
+node_modules/
+frontend/node_modules/
+
+# Local databases
+*.db
+placement_strategist.db
+backend/placement_strategist.db
+
+# Vector database indexes
+backend/vector_db/
+
+# Uploaded files
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Build directories
+dist/
+frontend/dist/
+
+# Logs and temp files
+*.log
+scratch/
+.gemini/
+.agents/
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
