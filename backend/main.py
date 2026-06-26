@@ -98,7 +98,11 @@ def get_dashboard_stats(
     readiness = calculate_readiness_score(profile, latest_resume, interviews)
     
     # Calculate eligible companies count
-    student_skills = set(s.strip().lower() for s in profile.skills.split(",") if s.strip()) if profile.skills else set()
+    student_skills = set()
+    if profile.skills:
+        student_skills.update(s.strip().lower() for s in profile.skills.split(",") if s.strip())
+    if profile.programming_languages:
+        student_skills.update(s.strip().lower() for s in profile.programming_languages.split(",") if s.strip())
     student_cgpa = profile.cgpa or 0.0
     companies_list = db.query(Company).all()
     

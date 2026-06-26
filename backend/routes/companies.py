@@ -38,7 +38,11 @@ def get_recommendations(current_user: User = Depends(get_current_user), db: Sess
             "not_eligible": []
         }
         
-    student_skills = set(s.strip().lower() for s in profile.skills.split(",") if s.strip()) if profile.skills else set()
+    student_skills = set()
+    if profile.skills:
+        student_skills.update(s.strip().lower() for s in profile.skills.split(",") if s.strip())
+    if profile.programming_languages:
+        student_skills.update(s.strip().lower() for s in profile.programming_languages.split(",") if s.strip())
     student_cgpa = profile.cgpa or 0.0
     
     companies = db.query(Company).all()
@@ -119,7 +123,11 @@ def get_skill_gap(company_id: int, current_user: User = Depends(get_current_user
     if not company:
         raise HTTPException(status_code=404, detail="Company not found")
         
-    student_skills = set(s.strip().lower() for s in profile.skills.split(",") if s.strip()) if profile.skills else set()
+    student_skills = set()
+    if profile.skills:
+        student_skills.update(s.strip().lower() for s in profile.skills.split(",") if s.strip())
+    if profile.programming_languages:
+        student_skills.update(s.strip().lower() for s in profile.programming_languages.split(",") if s.strip())
     comp_skills_list = [s.strip() for s in company.required_skills.split(",") if s.strip()] if company.required_skills else []
     
     missing_skills = [s for s in comp_skills_list if s.lower() not in student_skills]
